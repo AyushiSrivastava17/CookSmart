@@ -1,16 +1,6 @@
-# hobbies_at_home
+# Hobbies At Home
 
-A new Flutter project.
+A Flutter Project with the goal of helping users create meal plans with their intended amount of calories, sugar, and health conditions like diabetes taken into account. 
 
-## Getting Started
+## What the app aims to do
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
