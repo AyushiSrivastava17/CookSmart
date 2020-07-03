@@ -47,13 +47,16 @@ class QuizPageState extends State<QuizPage> {
         ),
         body: Center(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  new Padding(
+                    padding: EdgeInsets.only(top: 50),
+                  ),
               Container(
                 height: 75.0,
                 width: 350.0,
                 color: Colors.transparent,
-                child: Container(
+                child: Container (
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Color(0xFF7A9BEE), width: 3),
@@ -69,12 +72,48 @@ class QuizPageState extends State<QuizPage> {
                   ),
                 ),
               ),
-              
+             
               DropdownButton(
                 value: selectedDiet,
+                icon: Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
                 items: buildDropdownMenuItems(_diets),
+                style: TextStyle(
+                  color: Color(0xFF7A9BEE),
+                  fontSize: 18),
+                underline: Container(
+                height: 3,
+                color: Color(0xFF7A9BEE),
+                ),
                 onChanged: onChangeDropDownItem,
+              ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 50),),
+              
+            Container(
+                height: 75.0,
+                width: 350.0,
+                color: Colors.transparent,
+                child: Container (
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Color(0xFF7A9BEE), width: 3),
+                      borderRadius: BorderRadius.circular(10.0)),
+
+                  child: new Center(
+                    child: new Text("What are your allergies / food intolerances?",
+                        style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center),
+                  ),
+                ),
               )
+
             ]
           )
         )
