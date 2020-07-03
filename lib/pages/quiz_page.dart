@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../mechanics/multiselect.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -6,6 +7,52 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
+  List <MultiSelectDialogItem<int>> multiItem = List();
+
+  final allergies = {
+    1 : "None",
+    2 : "Milk",
+    3 : "Shellfish",
+    4 : "Egg",
+    5 : "Fish",
+    6 : "Soybeans",
+    7 : "Wheat",
+    8 : "Nuts",
+  };
+
+  void populateMultiselect(){
+    for(int v in allergies.keys){
+      multiItem.add(MultiSelectDialogItem(v, allergies[v]));
+    }
+  }
+    void _showMultiSelect(BuildContext context) async {
+      multiItem = [];
+      populateMultiselect();
+      final items = multiItem;
+
+    final selectedValues = await showDialog<Set<int>>(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelectDialog(
+          items: items,
+          initialSelectedValues: [1].toSet(),
+        );
+      },
+    );
+
+    print(selectedValues);
+    getvaluefromkey(selectedValues);
+  }
+
+  void getvaluefromkey(Set selection){
+    if(selection != null){
+      for(int x in selection.toList()){
+        print(allergies[x]);
+      }
+    }
+  }
+
+
   List<String> _diets = [
     'None',
     'Vegan',
@@ -57,10 +104,6 @@ class QuizPageState extends State<QuizPage> {
                 width: 350.0,
                 color: Colors.transparent,
                 child: Container (
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Color(0xFF7A9BEE), width: 3),
-                      borderRadius: BorderRadius.circular(10.0)),
                   child: new Center(
                     child: new Text("What is your preferred diet?",
                         style: TextStyle(
@@ -97,11 +140,6 @@ class QuizPageState extends State<QuizPage> {
                 width: 350.0,
                 color: Colors.transparent,
                 child: Container (
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Color(0xFF7A9BEE), width: 3),
-                      borderRadius: BorderRadius.circular(10.0)),
-
                   child: new Center(
                     child: new Text("What are your allergies / food intolerances?",
                         style: TextStyle(
@@ -112,8 +150,19 @@ class QuizPageState extends State<QuizPage> {
                         textAlign: TextAlign.center),
                   ),
                 ),
-              )
-
+              ),
+              FloatingActionButton.extended(
+              onPressed: () {
+                _showMultiSelect(context);
+              },
+              label: Text('Open to Select',
+                style: new TextStyle(
+                  color: Colors.white,
+                  fontSize: 15
+                ),
+                ),
+              backgroundColor: Color(0xFF7A9BEE),
+            ),
             ]
           )
         )
