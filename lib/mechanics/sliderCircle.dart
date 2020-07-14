@@ -37,8 +37,8 @@ class _SliderWidgetState extends State<SliderWidget> {
         ),
         gradient: new LinearGradient(
             colors: [
+              const Color(0xFFA974F4),
               const Color(0xFF7A9BEE),
-              const Color(0xFF0072ff),
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 1.00),

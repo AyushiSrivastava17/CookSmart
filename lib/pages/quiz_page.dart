@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../mechanics/multiselect.dart';
 import '../mechanics/sliderCircle.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -12,7 +13,12 @@ class QuizPageState extends State<QuizPage> {
   Color _diabetesColor = Colors.indigo[50];
   Color _highBloodPressureColor = Colors.indigo[50];
   Color _lowBloodPressureColor = Colors.indigo[50];
-  Color _highCholestrolColor = Colors.indigo[50];
+  Color _highCholestrolColor = Colors.indigo[50]; 
+  Set<String> healthConditions = Set();
+
+  Color _mealColor = Colors.indigo[50];
+  Color _mealPlanColor = Colors.indigo[50]; 
+  Set<String> mealChoice = Set();
 
   double sliderValue = 0;
   List<MultiSelectDialogItem<int>> multiItem = List();
@@ -96,7 +102,7 @@ class QuizPageState extends State<QuizPage> {
       appBar: AppBar(
         title: Text("Questionnaire",
             style: TextStyle(fontFamily: "MontSerrat", fontSize: 30)),
-        backgroundColor: Color(0xFF7A9BEE),
+        backgroundColor: Hexcolor("#a974f4"),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -113,7 +119,7 @@ class QuizPageState extends State<QuizPage> {
                   child: new Text(
                     "What is your preferred diet?",
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -128,10 +134,10 @@ class QuizPageState extends State<QuizPage> {
               iconSize: 24,
               elevation: 16,
               items: buildDropdownMenuItems(_diets),
-              style: TextStyle(color: Color(0xFF7A9BEE), fontSize: 18),
+              style: TextStyle(color: Hexcolor("#a974f4"), fontSize: 18),
               underline: Container(
                 height: 3,
-                color: Color(0xFF7A9BEE),
+                color: Hexcolor("#a974f4"),
               ),
               onChanged: onChangeDropDownItem,
             ),
@@ -146,7 +152,7 @@ class QuizPageState extends State<QuizPage> {
                 child: new Center(
                   child: new Text("What are your allergies?",
                       style: TextStyle(
-                          color: Color(0xFF7A9BEE),
+                          color: Hexcolor("#a974f4"),
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Montserrat"),
@@ -167,7 +173,7 @@ class QuizPageState extends State<QuizPage> {
                 'Open to Select',
                 style: new TextStyle(color: Colors.white, fontSize: 15),
               ),
-              backgroundColor: Color(0xFF7A9BEE),
+              backgroundColor: Hexcolor("#a974f4"),
             ),
             Padding(padding: EdgeInsets.all(20)),
             Container(
@@ -179,7 +185,7 @@ class QuizPageState extends State<QuizPage> {
                   child: new Text(
                       "Preferred maximum amount of calories in a meal?",
                       style: TextStyle(
-                          color: Color(0xFF7A9BEE),
+                          color: Hexcolor("#a974f4"),
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Montserrat"),
@@ -201,7 +207,7 @@ class QuizPageState extends State<QuizPage> {
                 child: new Center(
                   child: new Text("Any Preexisting Health Conditions?",
                       style: TextStyle(
-                          color: Color(0xFF7A9BEE),
+                          color: Hexcolor("#a974f4"),
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Montserrat"),
@@ -215,11 +221,14 @@ class QuizPageState extends State<QuizPage> {
             RaisedButton(
               color: _noneColor,
               onPressed: () {
+                print("None was picked!");
                 setState(() {
                   if (_noneColor == Colors.indigo[50]) {
                     _noneColor = Colors.blue[100];
+                    healthConditions.add("N");
                   } else {
                     _noneColor = Colors.indigo[50];
+                    healthConditions.remove("N");
                   }
                 });
               },
@@ -232,7 +241,7 @@ class QuizPageState extends State<QuizPage> {
                   child: Text(
                     'None',
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -247,11 +256,14 @@ class QuizPageState extends State<QuizPage> {
             RaisedButton (
               color: _diabetesColor,
               onPressed: () {
+                print("Diabetes was picked!");
                 setState(() {
                   if (_diabetesColor == Colors.indigo[50]) {
+                    healthConditions.add("D");
                     _diabetesColor = Colors.blue[100];
                   } else {
                     _diabetesColor = Colors.indigo[50];
+                    healthConditions.remove("D");
                   }
                 });
               },
@@ -264,7 +276,7 @@ class QuizPageState extends State<QuizPage> {
                   child: Text(
                     'Type 2 Diabetes',
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -279,11 +291,14 @@ class QuizPageState extends State<QuizPage> {
             RaisedButton(
               color: _highBloodPressureColor,
               onPressed: () {
+                print("High Blood Pressure was picked!");
                 setState(() {
                   if (_highBloodPressureColor == Colors.indigo[50]) {
                     _highBloodPressureColor = Colors.blue[100];
+                    healthConditions.add("H");
                   } else {
                     _highBloodPressureColor = Colors.indigo[50];
+                    healthConditions.remove("H");
                   }
                 });
               },
@@ -296,7 +311,7 @@ class QuizPageState extends State<QuizPage> {
                   child: Text(
                     'High Blood Pressure',
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -311,11 +326,14 @@ class QuizPageState extends State<QuizPage> {
             RaisedButton(
               color: _lowBloodPressureColor,
               onPressed: () {
+                print("Low Blood Pressure is pressed");
                 setState(() {
                   if (_lowBloodPressureColor == Colors.indigo[50]) {
+                    healthConditions.add("L");
                     _lowBloodPressureColor = Colors.blue[100];
                   } else {
                     _lowBloodPressureColor = Colors.indigo[50];
+                    healthConditions.remove("L");
                   }
                 });
               },
@@ -328,7 +346,7 @@ class QuizPageState extends State<QuizPage> {
                   child: Text(
                     'Low Blood Pressure',
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -340,15 +358,19 @@ class QuizPageState extends State<QuizPage> {
 
             Padding(padding: EdgeInsets.all(5)),
 
-          RaisedButton(
+            RaisedButton(
               color: _highCholestrolColor,
               onPressed: () {
+                print("Cholesterol was picked!");
                 setState(() {
                   if (_highCholestrolColor == Colors.indigo[50]) {
+                    healthConditions.add("C");
                     _highCholestrolColor = Colors.blue[100];
                   } else {
                     _highCholestrolColor = Colors.indigo[50];
+                    healthConditions.remove("C");
                   }
+                  print(healthConditions);
                 });
               },
               shape: new RoundedRectangleBorder(
@@ -360,7 +382,62 @@ class QuizPageState extends State<QuizPage> {
                   child: Text(
                     'High Cholestrol',
                     style: TextStyle(
-                        color: Color(0xFF7A9BEE),
+                        color: Hexcolor("#a974f4"),
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Montserrat"),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+
+            Padding(padding: EdgeInsets.only(top: 40)),
+
+            Container(
+              height: 75.0,
+              width: 350.0,
+              color: Colors.transparent,
+              child: Container(
+                child: new Center(
+                  child: new Text(
+                      "Looking for a single meal or a daily meal plan?",
+                      style: TextStyle(
+                          color: Hexcolor("#a974f4"),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                      textAlign: TextAlign.center),
+                ),
+              ),
+            ),
+            
+             Padding(padding: EdgeInsets.only(top: 20)),
+
+              RaisedButton(
+              color: _mealPlanColor,
+              onPressed: () {
+                print("Meal Plan is pressed");
+                setState(() {
+                  if (_mealPlanColor == Colors.indigo[50]) {
+                     mealChoice.add("P");
+                    _mealPlanColor = Colors.blue[100];
+                  } else {
+                    _mealPlanColor = Colors.indigo[50];
+                    mealChoice.remove("P");
+                  }
+                });
+              },
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15)),
+              child: Container(
+                width: 300,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    'Meal Plan',
+                    style: TextStyle(
+                        color: Hexcolor("#a974f4"),
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
@@ -372,6 +449,41 @@ class QuizPageState extends State<QuizPage> {
 
             Padding(padding: EdgeInsets.all(5)),
 
+            RaisedButton(
+              color: _mealColor,
+              onPressed: () {
+                print("Meal is pressed!");
+                setState(() {
+                  if (_mealColor == Colors.indigo[50]) {
+                    mealChoice.add("M");
+                    _mealColor = Colors.blue[100];
+                  } else {
+                    _mealColor = Colors.indigo[50];
+                    mealChoice.remove("M");
+                  }
+                  print(mealChoice);
+                });
+              },
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15)),
+              child: Container(
+                width: 300,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    'Single Meal',
+                    style: TextStyle(
+                        color: Hexcolor("#a974f4"),
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Montserrat"),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+
+            Padding(padding: EdgeInsets.only(top: 50)),
 
           ]),
         ),
