@@ -1,18 +1,19 @@
-
 import 'package:flutter/material.dart';
 
-class CustomSliderThumbRect extends SliderComponentShape {
+class CustomSliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
-  final thumbHeight;
+  final double thumbHeight;
   final int min;
   final int max;
 
-  const CustomSliderThumbRect({
+  CustomSliderThumbCircle (
+    {
     this.thumbRadius,
     this.thumbHeight,
     this.min,
-    this.max,
-  });
+    this.max
+    }
+);
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -34,36 +35,32 @@ class CustomSliderThumbRect extends SliderComponentShape {
   }) {
     final Canvas canvas = context.canvas;
 
-    final rRect = RRect.fromRectAndRadius(
-      Rect.fromCenter(
-          center: center, width: thumbHeight * 1.2, height: thumbHeight * .6),
-      Radius.circular(thumbRadius * .4),
-    );
-
     final paint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
     TextSpan span = new TextSpan(
-        style: new TextStyle(
-            fontSize: thumbHeight * .3,
-            fontWeight: FontWeight.w700,
-            color: sliderTheme.thumbColor,
-            height: 0.9),
-        text: '${getValue(value)}');
+      style: new TextStyle(
+        fontSize: thumbRadius * .7,
+        fontWeight: FontWeight.w700,
+        color: sliderTheme.thumbColor,
+      ),
+      text: getValue(value),
+    );
+
     TextPainter tp = new TextPainter(
         text: span,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.center,
         textDirection: TextDirection.ltr);
+        
     tp.layout();
-    Offset textCenter =
-        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
+    Offset textCenter = Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
 
-    canvas.drawRRect(rRect, paint);
+    canvas.drawCircle(center, thumbRadius * .9, paint);
     tp.paint(canvas, textCenter);
   }
 
   String getValue(double value) {
-    return ((max) * (value)).round().toString();
+    return ((max * value).round()).toString();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../mechanics/multiselect.dart';
-import '../mechanics/slider.dart';
+import '../mechanics/sliderCircle.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class QuizPageState extends State<QuizPage> {
     }
   }
 
-  void _showMultiSelect(BuildContext context) async {
+  void _showMultiSelect(BuildContext context, Set<int> selected) async{
     multiItem = [];
     populateMultiselect();
     final items = multiItem;
@@ -38,13 +38,15 @@ class QuizPageState extends State<QuizPage> {
       builder: (BuildContext context) {
         return MultiSelectDialog(
           items: items,
-          initialSelectedValues: [1].toSet(),
+          initialSelectedValues: selected,
         );
       },
     );
 
     print(selectedValues);
     getvaluefromkey(selectedValues);
+    selected.clear();
+    selected.addAll(selectedValues);
   }
 
   void getvaluefromkey(Set selection) {
@@ -82,147 +84,235 @@ class QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return new SingleChildScrollView(
-      child:
-      new Column (
-        children: [
-                    
-        
-        Scaffold(
+    Set<int> selected = Set(); 
+    bool pressAttention = false; 
+    return new Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Questionnaire",
-              style: TextStyle(fontFamily: "MontSerrat", fontSize: 30)),
-          backgroundColor: Color(0xFF7A9BEE),
+            style: TextStyle(fontFamily: "MontSerrat", fontSize: 30)),
+            backgroundColor: Color(0xFF7A9BEE),
         ),
-        body: Center(
+        body: SingleChildScrollView(
+          child: Center(
             child: Column(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-              new Padding(
-                padding: EdgeInsets.only(top: 50),
-              ),
-              Container(
-                height: 75.0,
-                width: 350.0,
-                color: Colors.transparent,
-                child: Container(
-                  child: new Center(
-                    child: new Text("What is your preferred diet?",
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 25),
+                ),
+                Container(
+                  height: 75.0,
+                  width: 350.0,
+                  color: Colors.transparent,
+                  child: Container(
+                    child: new Center(
+                      child: new Text("What is your preferred diet?",
                         style: TextStyle(
-                            color: Color(0xFF7A9BEE),
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Montserrat"),
-                        textAlign: TextAlign.center),
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              DropdownButton(
-                value: selectedDiet,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                items: buildDropdownMenuItems(_diets),
-                style: TextStyle(color: Color(0xFF7A9BEE), fontSize: 18),
-                underline: Container(
-                  height: 3,
-                  color: Color(0xFF7A9BEE),
+                DropdownButton(
+                  value: selectedDiet,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  items: buildDropdownMenuItems(_diets),
+                  style: TextStyle(color: Color(0xFF7A9BEE), fontSize: 18),
+                    underline: Container(
+                    height: 3,
+                    color: Color(0xFF7A9BEE),
+                  ),
+                  onChanged: onChangeDropDownItem,
                 ),
-                onChanged: onChangeDropDownItem,
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 30),
-              ),
-              Container(
-                height: 75.0,
-                width: 350.0,
-                color: Colors.transparent,
-                child: Container(
-                  child: new Center(
-                    child: new Text("What are your allergies?",
+                Padding(
+                  padding: EdgeInsets.only(bottom: 30),
+                ),
+                Container(
+                  height: 75.0,
+                  width: 350.0,
+                  color: Colors.transparent,
+                  child: Container(
+                    child: new Center(
+                      child: new Text("What are your allergies?",
                         style: TextStyle(
-                            color: Color(0xFF7A9BEE),
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Montserrat"),
-                        textAlign: TextAlign.center),
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              //Padding(padding: EdgeInsets.only(top: 10)),
-              FloatingActionButton.extended(
-                onPressed: () {
-                  _showMultiSelect(context);
-                },
-                label: Text(
-                  'Open to Select',
-                  style: new TextStyle(color: Colors.white, fontSize: 15),
-                ),
-                backgroundColor: Color(0xFF7A9BEE),
-              ),
-
-              Padding(padding: EdgeInsets.all(20)),
-
-              Container(
-                height: 75.0,
-                width: 350.0,
-                color: Colors.transparent,
-                child: Container(
-                  child: new Center(
-                    child: new Text(
+                //Padding(padding: EdgeInsets.only(top: 10)),
+                FloatingActionButton.extended(
+                  onPressed: () {
+                     if (selected.isEmpty){
+                        selected.add(1);
+                     }
+                    _showMultiSelect(context, selected);
+                    //getvaluefromkey(selected);
+                  },
+                  label: Text('Open to Select', style: new TextStyle(color: Colors.white, fontSize: 15),),
+                  backgroundColor: Color(0xFF7A9BEE),
+                ),      
+                Padding(padding: EdgeInsets.all(20)),
+                Container(
+                  height: 75.0,
+                  width: 350.0,
+                  color: Colors.transparent,
+                  child: Container(
+                    child: new Center(
+                      child: new Text(
                         "Preferred maximum amount of calories in a meal?",
                         style: TextStyle(
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(10)),
+                SliderWidget(48, 0, 2500, false),
+                Padding(padding: EdgeInsets.all(20)),
+                Container(
+                  height: 75.0,
+                  width: 350.0,
+                  color: Colors.transparent,
+                  child: Container(
+                    child: new Center(
+                      child: new Text(
+                        "Any Preexisting Health Conditions?",
+                        style: TextStyle(
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"None" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('None',
+                          style: TextStyle(
                             color: Color(0xFF7A9BEE),
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                             fontFamily: "Montserrat"),
-                        textAlign: TextAlign.center),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 30),
-              ),
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: Colors.red[700],
-                  inactiveTrackColor: Colors.red[100],
-                  trackShape: RoundedRectSliderTrackShape(),
-                  trackHeight: 4.0,
-                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                  thumbColor: Colors.redAccent,
-                  overlayColor: Colors.red.withAlpha(32),
-                  overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-                  tickMarkShape: RoundSliderTickMarkShape(),
-                  activeTickMarkColor: Colors.red[700],
-                  inactiveTickMarkColor: Colors.red[100],
-                  valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                  valueIndicatorColor: Colors.redAccent,
-                  valueIndicatorTextStyle: TextStyle(
-                    color: Colors.white,
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"Diabetic" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('Type 2 Diabetes',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
                   ),
                 ),
-                child: Slider(
-                  min: 0,
-                  max: 2500,
-                  divisions: 10,
-                  value: sliderValue,
-                  label: '$sliderValue',
-                  onChanged: (value) {
-                    setState(() {
-                      sliderValue = value;
-                    });
-                  },
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"High BP" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('High Blood Pressure',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
                 ),
-              )
-            ]
-          )
-        )
-      )
-      ]
-    )
+                RaisedButton(
+                  color: pressAttention ? Colors.grey : Colors.indigo[50],
+                  onPressed: () => setState(() => pressAttention = !pressAttention),
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  highlightColor: Colors.grey,
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    child: Center(
+                      child: Text('Low Blood Pressure',
+                        style: TextStyle(
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center,),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"High Cholesterol" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('High Cholesterol',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                )
+              ]
+          ),
+        ),
+      ),
     );
   }
 }
