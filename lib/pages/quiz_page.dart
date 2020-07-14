@@ -28,7 +28,7 @@ class QuizPageState extends State<QuizPage> {
     }
   }
 
-  void _showMultiSelect(BuildContext context) async {
+  void _showMultiSelect(BuildContext context, Set<int> selected) async{
     multiItem = [];
     populateMultiselect();
     final items = multiItem;
@@ -38,13 +38,15 @@ class QuizPageState extends State<QuizPage> {
       builder: (BuildContext context) {
         return MultiSelectDialog(
           items: items,
-          initialSelectedValues: [1].toSet(),
+          initialSelectedValues: selected,
         );
       },
     );
 
     print(selectedValues);
     getvaluefromkey(selectedValues);
+    selected.clear();
+    selected.addAll(selectedValues);
   }
 
   void getvaluefromkey(Set selection) {
@@ -82,7 +84,8 @@ class QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    
+    Set<int> selected = Set(); 
+    bool pressAttention = false; 
     return new Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -150,7 +153,11 @@ class QuizPageState extends State<QuizPage> {
                 //Padding(padding: EdgeInsets.only(top: 10)),
                 FloatingActionButton.extended(
                   onPressed: () {
-                    _showMultiSelect(context);
+                     if (selected.isEmpty){
+                        selected.add(1);
+                     }
+                    _showMultiSelect(context, selected);
+                    //getvaluefromkey(selected);
                   },
                   label: Text('Open to Select', style: new TextStyle(color: Colors.white, fontSize: 15),),
                   backgroundColor: Color(0xFF7A9BEE),
@@ -195,7 +202,114 @@ class QuizPageState extends State<QuizPage> {
                     ),
                   ),
                 ),
-            ],
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"None" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('None',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"Diabetic" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('Type 2 Diabetes',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"High BP" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('High Blood Pressure',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                ),
+                RaisedButton(
+                  color: pressAttention ? Colors.grey : Colors.indigo[50],
+                  onPressed: () => setState(() => pressAttention = !pressAttention),
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15)),
+                  highlightColor: Colors.grey,
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    child: Center(
+                      child: Text('Low Blood Pressure',
+                        style: TextStyle(
+                          color: Color(0xFF7A9BEE),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat"),
+                        textAlign: TextAlign.center,),
+                    ),
+                  ),
+                ),
+                Card(
+                  color: Colors.indigo[50],
+                  child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print('"High Cholesterol" health condition tapped.');
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      child: Center(
+                        child: Text('High Cholesterol',
+                          style: TextStyle(
+                            color: Color(0xFF7A9BEE),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Montserrat"),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ),
+                )
+              ]
           ),
         ),
       ),
