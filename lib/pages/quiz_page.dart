@@ -178,21 +178,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'None',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("None")
             ),
 
             Padding(padding: EdgeInsets.all(5)),
@@ -213,21 +199,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'Type 2 Diabetes',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("Type 2 Diabetes"),
             ),
 
             Padding(padding: EdgeInsets.all(5)),
@@ -248,21 +220,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'High Blood Pressure',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child:_buildButtons("High Blood Pressure")
             ),
 
             Padding(padding: EdgeInsets.all(5)),
@@ -283,21 +241,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'Low Blood Pressure',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("Low Blood Pressure")
             ),
 
             Padding(padding: EdgeInsets.all(5)),
@@ -319,21 +263,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'High Cholestrol',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("High Cholesterol")
             ),
 
             Padding(padding: EdgeInsets.only(top: 40)),
@@ -358,21 +288,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'Meal Plan',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("Meal Plan")
             ),
 
             Padding(padding: EdgeInsets.all(5)),
@@ -394,21 +310,7 @@ class QuizPageState extends State<QuizPage> {
               },
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(15)),
-              child: Container(
-                width: 300,
-                height: 50,
-                child: Center(
-                  child: Text(
-                    'Single Meal',
-                    style: TextStyle(
-                        color: Hexcolor("#a974f4"),
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+              child: _buildButtons("Single Meal")
             ),
 
             Padding(padding: EdgeInsets.only(top: 50)),
@@ -417,6 +319,12 @@ class QuizPageState extends State<QuizPage> {
               //splashColor: Hexcolor("#a974f4"),
               heroTag: 'btn2',
               onPressed: () {
+                /*if (healthConditions.isEmpty){
+                  return AlertDialog(actions: <Widget>[
+
+                  ],
+                  )
+                }*/
               },
               label: Text(
                 'Submit!',
@@ -457,6 +365,23 @@ class QuizPageState extends State<QuizPage> {
                 fontFamily: "Montserrat"),
             textAlign: TextAlign.center,
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButtons(String text){
+    return Container(
+      width: 300,
+      height: 50,
+      child: Center(
+        child: Text(text,
+          style: TextStyle(
+            color: Hexcolor("#a974f4"),
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Montserrat"),
+          textAlign: TextAlign.center,
         ),
       ),
     );
