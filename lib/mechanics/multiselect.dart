@@ -48,7 +48,8 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Select any allergies:', style: TextStyle(color: Color(0xFF79ABEE))),
+      //backgroundColor: Colors.blue[400],
+      title: Text('Select any allergies:', style: TextStyle(color: Color(0xFFA974F4))),
       contentPadding: EdgeInsets.only(top: 12.0),
       content: SingleChildScrollView(
         child: ListTileTheme(
@@ -61,11 +62,11 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('CANCEL', style: TextStyle(color: Color(0xFF79ABEE))),
+          child: Text('CANCEL', style: TextStyle(color: Color(0xFFA974F4))),
           onPressed: _onCancelTap,
         ),
         FlatButton(
-          child: Text('OK', style: TextStyle(color: Color(0xFF79ABEE))),
+          child: Text('OK', style: TextStyle(color: Color(0xFFA974F4))),
           onPressed: _onSubmitTap,
         )
       ],
