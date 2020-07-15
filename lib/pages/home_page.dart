@@ -4,68 +4,58 @@ import '../pages/quiz_page.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Material(
-      color: Colors.teal[400], // Color dependent on palette!!
+    return new MaterialApp(
+      home: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("homeBackground.png"), fit: BoxFit.cover
+            )
+        ),
       //InkWell is a property like an invisible button that allows us to register taps!
-      child: new InkWell(
-          //onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new QuizPage())),
-          //since a column takes multiple widgets and displays them beneath each other(?), uses children and not child
-          child: new Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: new Text(
-              "Hobbies",
-              style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat'),
+      child: new Scaffold (
+        backgroundColor: Colors.transparent,
+        body: new Center(
+          child: Column(
+          children: <Widget>[
+            new Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: new Image(
+                image: AssetImage('Logo.png') 
+              )
             ),
-          ),
-          new Padding(
-            padding: EdgeInsets.only(bottom: 100),
-            child: new Text(
-              "@ Home",
-              style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat'),
-            ),
-          ),
-          new Padding(
-              padding: EdgeInsets.only(bottom: 100),
-              child: new Container(
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+            new Padding(
+                padding: EdgeInsets.only(bottom: 80),
+                child: new Container(
+                  decoration: new BoxDecoration(
+                    color: Color(0xFF84DCC6),
+                    shape: BoxShape.circle,
+                  ),
+                  child: new Icon(Icons.home, size: 100),
+                )),
+            FloatingActionButton.extended(
+              onPressed: () {
+                // Add your onPressed code here!
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizPage()),
+                );
+              },
+              label: Text(
+                'Search for new recipes!',
+                style: new TextStyle(
+                  color: Colors.black,
                 ),
-                child: new Icon(Icons.home, size: 100),
-              )),
-          FloatingActionButton.extended(
-            onPressed: () {
-              // Add your onPressed code here!
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuizPage()),
-              );
-            },
-            label: Text(
-              'Search for new recipes!',
-              style: new TextStyle(
-                color: Colors.green[900],
               ),
+              icon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              backgroundColor: Color(0xFF84DCC6),
             ),
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-            backgroundColor: Colors.white,
-          ),
-        ],
-      )),
+          ],
+        ))
+       )
+      ),
     );
   }
 }

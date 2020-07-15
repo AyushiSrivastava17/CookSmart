@@ -1,4 +1,4 @@
-name: hobbies_at_home
+name: CookSmart
 description: A new Flutter project.
 
 
@@ -43,6 +43,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  assets:
+     - homeBackground.png
+     - background1.png
+     - Logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
