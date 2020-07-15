@@ -18,19 +18,13 @@ class HomePage extends StatelessWidget {
           child: Column(
           children: <Widget>[
             new Padding(
-              padding: EdgeInsets.only(top: 100, bottom: 50),
-              child: new Text(
-                "CookSmart",
-                style: new TextStyle(
-                    color: Color(0xFF84DCC6),
-                    fontSize: 50.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat'
-                ),
-              ),
+              padding: EdgeInsets.only(top: 50),
+              child: new Image(
+                image: AssetImage('Logo.png') 
+              )
             ),
             new Padding(
-                padding: EdgeInsets.only(bottom: 100),
+                padding: EdgeInsets.only(bottom: 80),
                 child: new Container(
                   decoration: new BoxDecoration(
                     color: Color(0xFF84DCC6),
