@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class MultiSelectDialogItem<V> {
   const MultiSelectDialogItem(this.value, this.label);
@@ -37,12 +38,12 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
     });
   }
 
-  void _onCancelTap() {
-    Navigator.pop(context);
-  }
-
   void _onSubmitTap() {
-    Navigator.pop(context, _selectedValues);
+    if (_selectedValues.contains(1) && _selectedValues.length > 1){
+      _showDialog("Unclear on intolerances!", "You've selected None AND other food groups to avoid, please fix this first");
+    } else {
+      Navigator.pop(context, _selectedValues);
+    }
   }
 
   @override
@@ -62,10 +63,6 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text('CANCEL', style: TextStyle(color: Color(0xFFA974F4))),
-          onPressed: _onCancelTap,
-        ),
-        FlatButton(
           child: Text('OK', style: TextStyle(color: Color(0xFFA974F4))),
           onPressed: _onSubmitTap,
         )
@@ -80,6 +77,49 @@ class _MultiSelectDialogState<V> extends State<MultiSelectDialog<V>> {
       title: Text(item.label),
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (checked) => _onItemCheckedChange(item.value, checked),
+    );
+  }
+  
+  void _showDialog(String mainTitle, String reminder) { // for empty health conditions set
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(mainTitle, 
+           style: TextStyle(
+            color: Hexcolor("#a974f4"),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Montserrat"),
+            textAlign: TextAlign.center,
+          ),
+          content: new Text(reminder, 
+           style: TextStyle(
+            color: Hexcolor("#a974f4"),
+            fontSize: 20,
+            fontFamily: "Montserrat"),
+          textAlign: TextAlign.center,
+          ),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(15)
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Ok", 
+                style: TextStyle(
+                  fontSize: 17
+                )
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

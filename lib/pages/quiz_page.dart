@@ -140,8 +140,8 @@ class QuizPageState extends State<QuizPage> {
                 padding: EdgeInsets.only(bottom: 30),
               ),
               
-              _buildQuestions("What are your allergies?"),
-              //Padding(padding: EdgeInsets.only(top: 10)),
+              _buildQuestions("Do you have any allergies/food intolerances?"),
+              Padding(padding: EdgeInsets.only(top: 20)),
 
               FloatingActionButton.extended(
                 heroTag: "btn1",
@@ -329,10 +329,21 @@ class QuizPageState extends State<QuizPage> {
                 //splashColor: Hexcolor("#a974f4"),
                 heroTag: 'btn2',
                 onPressed: () {
-                  print(healthConditions);
+                  if (selected.isEmpty){
+                    selected.add(1); // add None to it before leaving this page
+                  }
                   if (healthConditions.isEmpty || mealChoice.isEmpty){ // if no health conditions were answered
-                    _showDialog("Oh no! Some questions are still unanswered!", "One or more of the bottom three questions was unanswered");
+                    _showDialog("Some questions are still unanswered!", "One or more of the bottom three questions was unanswered");
                   } 
+                  else if (mealChoice.length == 2){ // selected both options in meal plan
+                    _showDialog("We're confused!", "You've selected both a single meal and the meal plan, please unselect one of them");
+                  } 
+                  else if (healthConditions.length > 1 && healthConditions.contains("N")){
+                    _showDialog("Schrodinger's Health conditions!", "You've selected 'None' and health condition(s), please fix this");
+                  } 
+                  else if (healthConditions.contains("H") && healthConditions.contains("L")){ 
+                    _showDialog("High AND Low Blood Pressure?", "Both these options were selected as health conditions, please unselect one of them");
+                  }
                 },
                 label: Text(
                   'Submit!',
@@ -407,7 +418,7 @@ class QuizPageState extends State<QuizPage> {
           title: new Text(mainTitle, 
            style: TextStyle(
             color: Hexcolor("#a974f4"),
-            fontSize: 20,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             fontFamily: "Montserrat"),
             textAlign: TextAlign.center,
@@ -415,7 +426,7 @@ class QuizPageState extends State<QuizPage> {
           content: new Text(reminder, 
            style: TextStyle(
             color: Hexcolor("#a974f4"),
-            fontSize: 15,
+            fontSize: 20,
             fontFamily: "Montserrat"),
           textAlign: TextAlign.center,
           ),
@@ -425,7 +436,11 @@ class QuizPageState extends State<QuizPage> {
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Ok"),
+              child: new Text("Ok", 
+                style: TextStyle(
+                  fontSize: 17
+                )
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
