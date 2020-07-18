@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import '../mechanics/sliderBar.dart';
 
-class SliderWidget extends StatefulWidget {
-  SliderWidget(this.sliderHeight, this.min, this.max, this.fullWidth);
 
-  final double sliderHeight;
-  final int min;
-  final int max;
-  final bool fullWidth;
+class SliderWidget extends StatefulWidget {
+  SliderWidget(this.sliderHeight, this.min, this.max, this.fullWidth, this.sValue);
+
+  double sliderHeight;
+  int min;
+  int max;
+  bool fullWidth;
+  Set<double> sValue;
 
   @override
-  _SliderWidgetState createState() => _SliderWidgetState();
+  SliderWidgetState createState() => SliderWidgetState(sValue: sValue);
 }
 
-class _SliderWidgetState extends State<SliderWidget> {
-  double _value = 0;
-
+class SliderWidgetState extends State<SliderWidget> {
+  SliderWidgetState({this.sValue});
+  Set<double> sValue = Set();
+  double _value = 0.0;
+  
   void initState() {
     super.initState();
   }
@@ -84,6 +88,11 @@ class _SliderWidgetState extends State<SliderWidget> {
                       onChanged: (value) {
                         setState(() {
                           _value = value;
+                          if (this.sValue.isNotEmpty){
+                            this.sValue.clear();
+                          }
+                          this.sValue.add(_value);
+                          print(this.sValue);
                           //print(_value); <== Debug statement
                         });
                       }),

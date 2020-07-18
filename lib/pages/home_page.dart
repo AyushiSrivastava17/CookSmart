@@ -20,18 +20,17 @@ class HomePage extends StatelessWidget {
             new Padding(
               padding: EdgeInsets.only(top: 50),
               child: new Image(
-                image: AssetImage('Logo.png') 
+                image: AssetImage('Title.png') 
               )
             ),
             new Padding(
-                padding: EdgeInsets.only(bottom: 80),
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    color: Color(0xFF84DCC6),
-                    shape: BoxShape.circle,
-                  ),
-                  child: new Icon(Icons.home, size: 100),
-                )),
+              padding: EdgeInsets.only(bottom: 50),
+              child: new Image(
+                image: AssetImage('CookSmart_logo.png'),
+                width: 250,
+                height: 250
+              )
+            ),
             FloatingActionButton.extended(
               onPressed: () {
                 // Add your onPressed code here!
@@ -44,13 +43,15 @@ class HomePage extends StatelessWidget {
                 'Search for new recipes!',
                 style: new TextStyle(
                   color: Colors.black,
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               icon: Icon(
                 Icons.search,
                 color: Colors.black,
               ),
-              backgroundColor: Color(0xFF84DCC6),
+              backgroundColor: Color(0xFFDABFFF),
             ),
           ],
         ))

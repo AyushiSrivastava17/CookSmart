@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import '../mechanics/multiselect.dart';
 import '../mechanics/sliderCircle.dart';
 import 'package:hexcolor/hexcolor.dart';
+import '../pages/custom_meal.dart';
+
+/*class Answer {
+  Set<String> healthConditions; 
+  Set<String> mealChoice;
+  Set<int> allergies; 
+  String selectedDiet;
+  Set<double> sliderValue;
+
+  Answer ({this.healthConditions, this.mealChoice, this.allergies, this.selectedDiet, this.sliderValue});
+}*/
 
 class QuizPage extends StatefulWidget {
   @override
@@ -20,7 +31,10 @@ class QuizPageState extends State<QuizPage> {
   Color _mealPlanColor = Colors.white;
   Set<String> mealChoice = Set();
 
-  double sliderValue = 0;
+  Set<int> selected = Set();
+   
+  SliderWidget slider;
+  Set<double> sliderSet = Set();
   List<MultiSelectDialogItem<int>> multiItem = List();
 
   final allergies = {
@@ -96,7 +110,6 @@ class QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    Set<int> selected = Set();
     return new Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -164,7 +177,7 @@ class QuizPageState extends State<QuizPage> {
 
               Padding(padding: EdgeInsets.all(10)),
 
-              SliderWidget(48, 0, 2500, false),
+              slider = SliderWidget(48, 0, 2500, false, sliderSet),
 
               Padding(padding: EdgeInsets.all(20)),
               
@@ -343,6 +356,20 @@ class QuizPageState extends State<QuizPage> {
                   } 
                   else if (healthConditions.contains("H") && healthConditions.contains("L")){ 
                     _showDialog("High AND Low Blood Pressure?", "Both these options were selected as health conditions, please unselect one of them");
+                  } else {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CustomPage(
+                          selectedDiet: selectedDiet,
+                          healthConditions: healthConditions,
+                          mealChoice: mealChoice,
+                          allergies: selected,
+                          sliderValue: sliderSet,
+                          foodAllergyDict: multiItem
+                        ),
+                      ),
+                    );
                   }
                 },
                 label: Text(

@@ -1,4 +1,4 @@
-import '../model/meal.dart';
+import 'meal_model.dart';
 
 class MealPlan {
   final List<Meal> meals;
@@ -9,6 +9,7 @@ class MealPlan {
 
   MealPlan({this.meals, this.calories, this.carbs, this.fat, this.protein});
 
+  //https://spoonacular.com/food-api/docs#Generate-Meal-Plan
   factory MealPlan.fromMap(Map<String, dynamic> map) {
     List<Meal> meals = [];
     map['meals'].forEach((mealMap) => meals.add(Meal.fromMap(mealMap)));
