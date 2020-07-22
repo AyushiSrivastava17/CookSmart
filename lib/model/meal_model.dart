@@ -1,13 +1,10 @@
 class Meal {
   final int id;
   final String title;
-  final String imgURL;
+  final String imageType;
+  final String imageURL;
 
-  Meal({
-    this.id, 
-    this.title, 
-    this.imgURL
-  });
+  Meal({this.id, this.title, this.imageType, this.imageURL});
 
   //given a string, dynamic means any type!
   //https://spoonacular.com/food-api/docs#Generate-Meal-Plan
@@ -15,9 +12,8 @@ class Meal {
     return Meal(
       id: map['id'],
       title: map['title'],
-
-      //NOTE: THE DOC IS OUTDATED, THERE IS A SOURCE URL BUT NOT AN IMAGE URL
-      //imgURL: 'https://spoonacular.com/recipeImages/' + map['image'],
+      imageType: map['imageType'],
+      imageURL: 'https://spoonacular.com/recipeImages/' + map['id'].toString() + '-' + '556x370' + '.' + map['imageType']
     );
   }
 }

@@ -18,17 +18,17 @@ class HomePage extends StatelessWidget {
           child: Column(
           children: <Widget>[
             new Padding(
-              padding: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: 30),
               child: new Image(
                 image: AssetImage('Title.png') 
               )
             ),
             new Padding(
-              padding: EdgeInsets.only(bottom: 50),
+              padding: EdgeInsets.only(bottom: 40),
               child: new Image(
                 image: AssetImage('CookSmart_logo.png'),
-                width: 250,
-                height: 250
+                width: 175,
+                height: 175,
               )
             ),
             FloatingActionButton.extended(
@@ -42,16 +42,16 @@ class HomePage extends StatelessWidget {
               label: Text(
                 'Search for new recipes!',
                 style: new TextStyle(
-                  color: Colors.black,
+                  color: Color(0xFFFF7477),
                   fontFamily: "Montserrat",
                   fontWeight: FontWeight.bold,
                 ),
               ),
               icon: Icon(
                 Icons.search,
-                color: Colors.black,
+                color: Color(0xFFFF7477),
               ),
-              backgroundColor: Color(0xFFDABFFF),
+              backgroundColor: Color(0xFFA7C8FF),
             ),
           ],
         ))

@@ -1,13 +1,10 @@
-import 'package:CookSmart/mechanics/multiselect.dart';
-import 'package:CookSmart/pages/meal_plan_screen.dart';
+import '../pages/meal_plan_screen.dart';
 import 'package:flutter/material.dart';
-import '../pages/quiz_page.dart';
 
-import 'package:flutter/material.dart';
-import '../mechanics/multiselect.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../model/meal_plan_model.dart';
 import '../services/services.dart';
+import '../model/recipe_model.dart';
 
 class CustomPage extends StatefulWidget {
   final String selectedDiet;
@@ -15,7 +12,7 @@ class CustomPage extends StatefulWidget {
   final Set<String> mealChoice;
   final Set<int> allergies;
   final Set<double> sliderValue;
-  final List<MultiSelectDialogItem<int>> foodAllergyDict;
+  final Map<int, String> foodAllergyDict;
 
   CustomPage(
       {this.selectedDiet,
@@ -35,16 +32,32 @@ class CustomPageState extends State<CustomPage> {
   void searchMealPlan() async {
     MealPlan mealPlan = await APIService.instance.generateMealPlan(
       diet: widget.selectedDiet,
-      //allergies: 
+      allergies: makeAllergyString(),
       targetCalories: widget.sliderValue.single.toInt() * 2500,
     );
 
     Navigator.push(context, 
       MaterialPageRoute(builder: (context) => MealPage(
-        mealPlan: mealPlan),
+        mealPlan: mealPlan
+      ),
       )
     );
   }
+
+  String makeAllergyString() {
+    String allergyString = "";
+    if (this.widget.allergies.length == 1){
+      allergyString += this.widget.foodAllergyDict[this.widget.allergies.elementAt(0)].toLowerCase();
+     } else {
+       List<int> allergiesList = this.widget.allergies.toList();
+      for(int x = 0; x < allergiesList.length - 1; x++){
+        allergyString += this.widget.foodAllergyDict[allergiesList[x]].toLowerCase();
+        allergyString += ", ";
+      }
+      allergyString += this.widget.foodAllergyDict[allergiesList[allergiesList.length-1]].toLowerCase();
+    }
+    return allergyString;
+}
 
   @override
   Widget build(BuildContext context) {

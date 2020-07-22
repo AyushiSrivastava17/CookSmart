@@ -6,16 +6,6 @@ import '../pages/custom_meal.dart';
 import '../model/meal_plan_model.dart';
 import '../services/services.dart';
 
-/*class Answer {
-  Set<String> healthConditions; 
-  Set<String> mealChoice;
-  Set<int> allergies; 
-  String selectedDiet;
-  Set<double> sliderValue;
-
-  Answer ({this.healthConditions, this.mealChoice, this.allergies, this.selectedDiet, this.sliderValue});
-}*/
-
 class QuizPage extends StatefulWidget {
   @override
   State createState() => new QuizPageState();
@@ -39,20 +29,20 @@ class QuizPageState extends State<QuizPage> {
   Set<double> sliderSet = Set();
   List<MultiSelectDialogItem<int>> multiItem = List();
 
-  final allergies = {
+  final allergiesDict = {
     1: "None",
-    2: "Milk",
+    2: "Dairy",
     3: "Shellfish",
     4: "Egg",
-    5: "Fish",
-    6: "Soybeans",
+    5: "Seafood",
+    6: "Soy",
     7: "Wheat",
-    8: "Nuts",
+    8: "Peanut",
   };
 
   void populateMultiselect() {
-    for (int v in allergies.keys) {
-      multiItem.add(MultiSelectDialogItem(v, allergies[v]));
+    for (int v in allergiesDict.keys) {
+      multiItem.add(MultiSelectDialogItem(v, allergiesDict[v]));
     }
   }
 
@@ -80,7 +70,7 @@ class QuizPageState extends State<QuizPage> {
   void getvaluefromkey(Set selection) {
     if (selection != null) {
       for (int x in selection.toList()) {
-        print(allergies[x]);
+        print(allergiesDict[x]);
       }
     }
   }
@@ -342,7 +332,7 @@ class QuizPageState extends State<QuizPage> {
                                 mealChoice: mealChoice,
                                 allergies: selected,
                                 sliderValue: sliderSet,
-                                foodAllergyDict: multiItem),
+                                foodAllergyDict: allergiesDict),
                           ),
                         );
                       }

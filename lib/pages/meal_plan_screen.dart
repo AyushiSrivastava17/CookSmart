@@ -1,11 +1,6 @@
-import 'package:path/path.dart';
-import 'package:CookSmart/mechanics/multiselect.dart';
 import 'package:CookSmart/pages/recipe_screen.dart';
 import 'package:flutter/material.dart';
-import '../pages/quiz_page.dart';
 
-import 'package:flutter/material.dart';
-import '../mechanics/multiselect.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../model/meal_plan_model.dart';
 import '../model/meal_model.dart';
@@ -41,10 +36,10 @@ class MealPageState extends State<MealPage> {
             ),
             decoration: BoxDecoration(
               color: Colors.white,
-              /*image: DecorationImage(
-                image: NetworkImage(meal.imageUrl),
+              image: DecorationImage(
+                image: NetworkImage(meal.imageURL),
                 fit: BoxFit.cover,
-              )*/
+              ),
               borderRadius: BorderRadius.circular(15.0),
               boxShadow: [
                 BoxShadow(
@@ -83,11 +78,10 @@ class MealPageState extends State<MealPage> {
         ],
       ),
     );
-    
   }
 
   void searchRecipe(Meal meal, String mealType) async {
-    Recipe recipe = await APIService.instance.fetchRecipe(meal.id.toString());
+    Recipe recipe = await APIService.instance.fetchRecipe(id: meal.id.toString());
     Navigator.push(
       this.context,
       MaterialPageRoute(
@@ -119,15 +113,16 @@ class MealPageState extends State<MealPage> {
         title: Text('Your Meal Plan'),
       ),
       body: ListView.builder(
-        itemCount: 1 + widget.mealPlan.meals.length,
+        itemCount: widget.mealPlan.meals.length,
         itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
+          /*if (index == 0) {
             print(widget.mealPlan.protein.toString());
             print(widget.mealPlan.calories.toString());
             print(widget.mealPlan.carbs.toString());
-          }
-          Meal meal = widget.mealPlan.meals[index - 1];
-          return buildMealCard(meal, index - 1);
+          }*/
+          Meal meal = widget.mealPlan.meals[index];
+          //print(meal.imageURL);
+          return buildMealCard(meal, index);
         },
       ),
     );
