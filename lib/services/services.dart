@@ -35,7 +35,7 @@ class APIService {
       'targetCalories': targetCalories.toString(),
       'diet': diet,
       'exclude': allergies,
-      'apiKey': API_KEY 
+      'apiKey': API_KEY
     };
 
     Uri uri = Uri.https(
@@ -61,7 +61,7 @@ class APIService {
   }
 
   //Takes the ID of the recipe you want information from
-  Future<Recipe> fetchRecipe(String id) async {
+  Future<Recipe> fetchRecipe({String id}) async {
     Map<String, String> parameters = {
       'includeNutrition': 'false',
       'apiKey': API_KEY
