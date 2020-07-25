@@ -79,7 +79,7 @@ class QuizPageState extends State<QuizPage> {
     'None',
     'Vegan',
     'Gluten Free',
-    'Pescaterian',
+    'Pescatarian',
     'Vegetarian'
   ];
 
@@ -114,13 +114,13 @@ class QuizPageState extends State<QuizPage> {
             Container(
               decoration: new BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("background1.png"), fit: BoxFit.fill)),
+                      image: AssetImage("background4.png"), fit: BoxFit.fill)),
             ),
             SingleChildScrollView(
               child: Center(
                 child: Column(children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 25),
+                    padding: EdgeInsets.only(top: 50),
                   ),
                   _buildQuestions("What is your preferred diet?"),
                   DropdownButton(
@@ -160,7 +160,7 @@ class QuizPageState extends State<QuizPage> {
                   Padding(padding: EdgeInsets.all(20)),
                   _buildQuestions("Preferred amount of calories in a day?"),
                   Padding(padding: EdgeInsets.all(10)),
-                  slider = SliderWidget(48, 0, 2500, false, sliderSet),
+                  slider = SliderWidget(48, 1500, 2500, false, sliderSet),
                   Padding(padding: EdgeInsets.all(20)),
                   _buildQuestions("Any preexisting health conditions?"),
                   Padding(padding: EdgeInsets.all(10)),
@@ -301,8 +301,13 @@ class QuizPageState extends State<QuizPage> {
                     heroTag: 'btn2',
                     onPressed: () {
                       if (selected.isEmpty) {
-                        selected
-                            .add(1); // add None to it before leaving this page
+                        selected.add(1); // add None to it before leaving this page
+                      }
+                      if (selected.contains(3) && selected.contains(5) && selectedDiet == 'Pescatarian') {
+                        selectedDiet = 'Vegetarian';
+                      }
+                      if (sliderSet.isEmpty) {
+                        sliderSet.add(0.0);
                       }
                       if (healthConditions.isEmpty || mealChoice.isEmpty) {
                         // if no health conditions were answered
@@ -321,8 +326,6 @@ class QuizPageState extends State<QuizPage> {
                         _showDialog("High AND Low Blood Pressure?",
                             "Both these options were selected as health conditions, please unselect one of them");
                       } else {
-
-                      
                         Navigator.push(
                           context,
                           MaterialPageRoute(
