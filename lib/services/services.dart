@@ -61,16 +61,18 @@ class APIService {
   }
 
   //Takes the ID of the recipe you want information from
-  Future<Recipe> fetchRecipe({String id}) async {
+  Future<Recipe> fetchRecipe({int id}) async {
     Map<String, String> parameters = {
       'includeNutrition': 'false',
       'apiKey': API_KEY
     };
 
     //Include the recipe ID in the uri and parse in parameters
+    String idString = id.toString();
+    String recipeParam = '/recipes/\$' + idString + '/information';
     Uri uri = Uri.https(
       _baseURL,
-      '/recipes/$id/information',
+      recipeParam,
       parameters,
     );
 

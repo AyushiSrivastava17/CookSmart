@@ -61,6 +61,9 @@ class CustomSliderThumbCircle extends SliderComponentShape {
   }
 
   String getValue(double value) {
-    return ((max * value).round()).toString();
+    if (value == 0){
+      return 1500.toString();
+    }
+    return ((min + (1000 * value)).round()).toString();
   }
 }

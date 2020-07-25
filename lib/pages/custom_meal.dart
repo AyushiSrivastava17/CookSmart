@@ -1,6 +1,5 @@
 import '../pages/meal_plan_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hexcolor/hexcolor.dart';
 import '../model/meal_plan_model.dart';
 import '../services/services.dart';
@@ -30,15 +29,17 @@ class CustomPage extends StatefulWidget {
 
 class CustomPageState extends State<CustomPage> {
   void searchMealPlan() async {
+    int calories = (1500 + (widget.sliderValue.single.toInt() * 1000));
     MealPlan mealPlan = await APIService.instance.generateMealPlan(
       diet: widget.selectedDiet,
       allergies: makeAllergyString(),
-      targetCalories: widget.sliderValue.single.toInt() * 2500,
+      targetCalories: calories,
     );
 
     Navigator.push(context, 
       MaterialPageRoute(builder: (context) => MealPage(
-        mealPlan: mealPlan
+        mealPlan: mealPlan,
+
       ),
       )
     );
