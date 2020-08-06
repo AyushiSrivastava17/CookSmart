@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:CookSmart/model/meal_model.dart';
+
 import '../pages/meal_plan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -28,6 +32,9 @@ class CustomPage extends StatefulWidget {
 }
 
 class CustomPageState extends State<CustomPage> {
+  TextEditingController ingredientC = new TextEditingController();
+  List<String> ingredients; 
+
   void searchMealPlan() async {
     int calories = (1500 + (widget.sliderValue.single.toInt() * 1000));
     MealPlan mealPlan = await APIService.instance.generateMealPlan(
@@ -62,31 +69,117 @@ class CustomPageState extends State<CustomPage> {
 
   @override
   Widget build(BuildContext context) {
-    /*print(this.widget.selectedDiet);
-    print((this.widget.sliderValue.single * 2500).toString());
-    print(this.widget.healthConditions);
-    print(this.widget.allergies);
-    print(this.widget.mealChoice);*/
-
     return new Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        actions: <Widget>[
-          FloatingActionButton.extended(
-            onPressed: () => searchMealPlan(),
-
-            label: Text(
-              'TESTING',
-              style: new TextStyle(
-                color: Colors.black,
-                fontFamily: "Montserrat",
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            backgroundColor: Color(0xFFDABFFF),
+        backgroundColor: Color(0xFFFCA311),
+        title: Text("Additional ingredients?", 
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 25
           )
-        ],
+        )
+      ),
+      body: 
+      Container(
+        decoration: new BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("background3.png"), fit: BoxFit.cover)
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: ListView(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 30)
+                      ),
+                      FloatingActionButton.extended(
+                        heroTag: "RandomizedMeal",
+                        onPressed: () {
+                          if (this.widget.mealChoice.single == 'P') { // if they selected meal plan
+                            searchMealPlan();
+                          } else {
+
+                          }
+                        },
+                        label: Text(
+                          "Completely Randomized Meal (Plan)",
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        backgroundColor: Color(0xFFFCA311),
+                      ), 
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 30)
+                      ),
+                      Container(
+                        width: 330,
+                        height: 200,
+                        child: TextField(
+                          controller: ingredientC,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Ingredients',
+                          ),
+                          style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFFFCA311), fontWeight: FontWeight.bold),
+                          onSubmitted: (String value) {
+                            ingredients.add(value);
+                            value = "";
+                            print(ingredients.length);
+                          }
+                        ),
+                      ),
+                      FloatingActionButton.extended(
+                        heroTag: "showIngredients",
+                        onPressed: () {
+                          String ingred =  _createIngredientString();
+                          return showDialog(
+                            context: context,
+                            builder: (context){
+                              return AlertDialog(
+                                content: Text("The ingredients you have included are: \n" + ingred, 
+                                  style: TextStyle(fontFamily: 'Montserrat', color: Color(0xFFFCA311), fontWeight: FontWeight.bold)
+                                ),   
+                              );
+                            }
+                          );
+                        },
+                        label: Text("See currently added ingredients!",
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        backgroundColor: Color(0xFFFCA311),
+                      )
+                    ],
+                  )
+                )
+              )
+            ]
+          )
+        )
       ),
     );
+  }
+  String _createIngredientString(){
+    String complete = "";
+    for (int i = 0; i < ingredients.length; i++){
+      if (i == ingredients.length-1){
+        complete += ingredients[i];
+      } else {
+        complete += ingredients[i] + ", ";
+      }
+    }
+    return complete; 
   }
 }

@@ -114,13 +114,13 @@ class QuizPageState extends State<QuizPage> {
             Container(
               decoration: new BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("background4.png"), fit: BoxFit.fill)),
+                      image: AssetImage("background1.png"), fit: BoxFit.fill)),
             ),
             SingleChildScrollView(
               child: Center(
                 child: Column(children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: EdgeInsets.only(top: 20),
                   ),
                   _buildQuestions("What is your preferred diet?"),
                   DropdownButton(
