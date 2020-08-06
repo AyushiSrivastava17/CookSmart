@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                 style: new TextStyle(
                   color: Color(0xFFFF7477),
                   fontFamily: "Montserrat",
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
               icon: Icon(
