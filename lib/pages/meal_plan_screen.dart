@@ -21,10 +21,10 @@ class MealPageState extends State<MealPage> {
     return GestureDetector(
       onTap: () => searchRecipe(meal, mealType),
       child: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomLeft,
         children: <Widget>[
           Container(
-            height: 220.0,
+            height: 290.0,
             width: double.infinity,
             margin: EdgeInsets.symmetric(
               horizontal: 20.0,
@@ -50,45 +50,62 @@ class MealPageState extends State<MealPage> {
               ],
             ),
           ),
+
+          Container (
+            height: 290,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: 15.0,
+              vertical: 10.0,
+            ),
+            
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  const Color(0xCC000000),
+                  const Color(0x00000000),
+                  const Color(0x00000000),
+                  const Color(0xCC000000),
+                ],
+              ),
+            ),
+          ),
           Container(
-            margin: EdgeInsets.all(60.0),
+            margin: EdgeInsets.all(20.0),
             padding: EdgeInsets.all(10.0),
-            color: Color(0xC0FF7477),
             child: Column(
               children: <Widget>[
-                Text(
-                  mealType,
-                  style: TextStyle(
-                    fontFamily: "MontSerrat", 
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
-                  ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: 
+                    Text(
+                      meal.cookingTime.toString() + " minutes",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.white
+                      ),
+                    )
                 ),
-                Text(
-                  meal.title,
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "Cooking Time: " + meal.cookingTime.toString() + " minutes", 
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.right,
-                ),
-                Text(
-                  "Servings: " + meal.servings.toString(), 
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.right,
-                ),
+                
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: 
+                    Text(
+                    meal.title,
+                    style: TextStyle(
+                      fontSize: 21.0,
+                      color: Colors.white
+                    ),
+                     overflow: TextOverflow.ellipsis,
+                  )
+                ),                
               ],
             ),
           ),
@@ -133,12 +150,12 @@ class MealPageState extends State<MealPage> {
       ),
       body: Stack(
           children: <Widget>[
-            Container(
+            /*Container(
               decoration: new BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("background1.png"), fit: BoxFit.fill)),
-            ),
-            Container(
+            ),*/
+            /*Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(10.0),
               child: Text(
@@ -147,7 +164,7 @@ class MealPageState extends State<MealPage> {
                   fontFamily: 'MontSerrat'
                 )
               )
-            ),
+            ),*/
             ListView.builder(
               itemCount: widget.mealPlan.meals.length,
               itemBuilder: (BuildContext context, int index) {
