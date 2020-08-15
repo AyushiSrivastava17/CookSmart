@@ -40,6 +40,8 @@ class QuizPageState extends State<QuizPage> {
     8: "Peanut",
   };
 
+  bool selectedMealPlan;
+
   void populateMultiselect() {
     for (int v in allergiesDict.keys) {
       multiItem.add(MultiSelectDialogItem(v, allergiesDict[v]));
@@ -103,7 +105,7 @@ class QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Hexcolor("#d4dcf2"),
         appBar: AppBar(
           title: Text("Questionnaire",
               style: TextStyle(fontFamily: "MontSerrat", fontSize: 30)),
@@ -111,11 +113,11 @@ class QuizPageState extends State<QuizPage> {
         ),
         body: Stack(
           children: <Widget>[
-            Container(
+            /*Container(
               decoration: new BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("background1.png"), fit: BoxFit.fill)),
-            ),
+            ),*/
             SingleChildScrollView(
               child: Center(
                 child: Column(children: <Widget>[
@@ -262,6 +264,7 @@ class QuizPageState extends State<QuizPage> {
                   RaisedButton(
                       color: _mealPlanColor,
                       onPressed: () {
+                        selectedMealPlan = true;
                         print("Meal Plan is pressed");
                         setState(() {
                           if (_mealPlanColor == Colors.white) {
@@ -280,6 +283,7 @@ class QuizPageState extends State<QuizPage> {
                   RaisedButton(
                       color: _mealColor,
                       onPressed: () {
+                        selectedMealPlan = false;
                         print("Meal is pressed!");
                         setState(() {
                           if (_mealColor == Colors.white) {
@@ -301,9 +305,12 @@ class QuizPageState extends State<QuizPage> {
                     heroTag: 'btn2',
                     onPressed: () {
                       if (selected.isEmpty) {
-                        selected.add(1); // add None to it before leaving this page
+                        selected
+                            .add(1); // add None to it before leaving this page
                       }
-                      if (selected.contains(3) && selected.contains(5) && selectedDiet == 'Pescatarian') {
+                      if (selected.contains(3) &&
+                          selected.contains(5) &&
+                          selectedDiet == 'Pescatarian') {
                         selectedDiet = 'Vegetarian';
                       }
                       if (sliderSet.isEmpty) {
@@ -330,6 +337,7 @@ class QuizPageState extends State<QuizPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => CustomPage(
+                                selectedMealPlan: selectedMealPlan,
                                 selectedDiet: selectedDiet,
                                 healthConditions: healthConditions,
                                 mealChoice: mealChoice,

@@ -19,8 +19,8 @@ class Meal {
       cookingTime: map['readyInMinutes'],
       servings: map['servings'],
       imageURL: 'https://spoonacular.com/recipeImages/' + map['id'].toString() + '-' + '556x370' + '.' + map['imageType'],
-      sourceUrl: map['sourceUrl']
-      //sourceUrl: 'https://spoonacular.com/recipes/' + map['title'].split(" ").join("-").toLowerCase().toString() + '-' + map['id'].toString()
+      //sourceUrl: map['sourceUrl']
+      sourceUrl: 'https://spoonacular.com/recipes/' + map['title'].split(" ").join("-").toLowerCase().toString() + '-' + map['id'].toString()
     );
   }
 }
