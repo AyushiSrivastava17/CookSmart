@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async' show Future;
+import 'package:CookSmart/model/ingredients_model.dart';
 import 'package:http/http.dart' as http;
 import '../model/meal_model.dart';
 import '../model/meal_plan_model.dart';
@@ -85,6 +86,41 @@ class APIService {
       Map<String, dynamic> data = json.decode(response.body);
       Recipe recipe = Recipe.fromMap(data);
       return recipe;
+    } catch (err) {
+      throw err.toString();
+    }
+  }
+
+  Future<SearchIngredients> searchByIngredients({String ingredients}) async {
+    if (ingredients == 'None') {
+      ingredients = ''; //Set to be an empty string!
+    }
+
+    Map<String, String> parameters = {
+      'ingredients': ingredients, 
+      'number': '10',
+      'limitLicense': 'true',
+      'ranking': '1',
+      'ignorePantry': 'true',
+      'apiKey': API_KEY
+    };
+
+    Uri uri = Uri.https(
+      _baseURL,
+      '/recipes/findByIngredients', //GET REQUEST URL? Endpoint we're using
+      parameters,
+    );
+
+    //Headers, return a json object
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+
+    try {
+      var response = await http.get(uri, headers: headers);
+      Map<String, dynamic> data = json.decode(response.body);
+      SearchIngredients ingred = SearchIngredients.fromMap(data);
+      return ingred;
     } catch (err) {
       throw err.toString();
     }
