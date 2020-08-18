@@ -1,6 +1,5 @@
 import 'dart:ui';
-
-import 'package:CookSmart/model/ingredients_model.dart';
+import 'package:CookSmart/model/ingredients_list.dart';
 import 'package:CookSmart/model/meal_model.dart';
 import '../pages/meal_plan_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../model/meal_plan_model.dart';
 import '../services/services.dart';
 import '../model/recipe_model.dart';
+import '../pages/meal_ingredients_screen.dart';
 
 class CustomPage extends StatefulWidget {
   final bool selectedMealPlan;
@@ -63,12 +63,13 @@ class CustomPageState extends State<CustomPage> {
     SearchIngredients searchIngred =
         await APIService.instance.searchByIngredients(ingredients: ingredients);
 
-    print(searchIngred.title);
+    //print(searchIngred.title);
+    //print(searchIngred.sourceUrl);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MealPage(
+          builder: (context) => MealIngredientsPage(
             searchIngredients: searchIngred,
             selectedMealPlan: widget.selectedMealPlan,
           ),
@@ -122,7 +123,9 @@ class CustomPageState extends State<CustomPage> {
                     FloatingActionButton.extended(
                       heroTag: "RandomizedMeal",
                       onPressed: () {
-                        searchMealPlan();
+                        //searchMealPlan();
+                        searchMealsByIngredients(ingredientC.text);
+                        //NOTE TO SELF: CREATE A NEW BUTTON FOR INGREDIENTS, SEPARATE FROM RANDOMIZED BUTTON
                       },
                       label: Text(
                         "Completely Randomized Meal (Plan)",
@@ -194,17 +197,5 @@ class CustomPageState extends State<CustomPage> {
                 )))
               ]))),
     );
-  }
-
-  String _createIngredientString() {
-    String complete = "";
-    for (int i = 0; i < ingredients.length; i++) {
-      if (i == ingredients.length - 1) {
-        complete += ingredients[i];
-      } else {
-        complete += ingredients[i] + ", ";
-      }
-    }
-    return complete;
   }
 }
