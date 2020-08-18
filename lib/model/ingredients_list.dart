@@ -1,17 +1,39 @@
-import 'package:CookSmart/model/ingredients_model.dart';
+// To parse this JSON data, do
+//
+//     final welcome = welcomeFromMap(jsonString);
 
-class SearchIngredientsList {
-  final List<SearchIngredients> ingredientRecipes;
+import 'dart:convert';
 
-  //https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients
+List<SearchIngredients> welcomeFromMap(String str) =>
+    List<SearchIngredients>.from(json.decode(str).map((x) => SearchIngredients.fromMap(x)));
 
-  SearchIngredientsList({this.ingredientRecipes});
+String welcomeToMap(List<SearchIngredients> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
 
-  factory SearchIngredientsList.fromMap(Map<String, dynamic> map) {
-    List<SearchIngredients> list = [];
-    //list = List<SearchIngredients>.from(response.data.map((i) => SearchIngredients.fromMap(i)));
+class SearchIngredients {
+  final int id;
+  final String image;
+  final String title;
+  final String sourceUrl;
 
+  SearchIngredients({
+    this.id,
+    this.image,
+    this.title,
+    this.sourceUrl
+  });
 
-    return SearchIngredientsList();
-  }
+  factory SearchIngredients.fromMap(Map<String, dynamic> json) => SearchIngredients(
+        id: json["id"],
+        image: json["image"],
+        title: json["title"],
+        sourceUrl: 'https://spoonacular.com/recipes/' + json['title'].split(" ").join("-").toLowerCase().toString() + '-' + json['id'].toString()
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "image": image,
+        "title": title,
+        "sourceUrl": sourceUrl
+      };
 }

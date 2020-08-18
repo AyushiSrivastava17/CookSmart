@@ -1,4 +1,4 @@
-class SearchIngredients {
+/*class SearchIngredients {
   final int id;
   final String title;
   final String image;
@@ -16,4 +16,4 @@ class SearchIngredients {
       sourceUrl: 'https://spoonacular.com/recipes/' + map['title'].split(" ").join("-").toLowerCase().toString() + '-' + map['id'].toString()
     );
   }
-}
+}*/

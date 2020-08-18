@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async' show Future;
-import 'package:CookSmart/model/ingredients_model.dart';
+import 'package:CookSmart/model/ingredients_list.dart';
 import 'package:http/http.dart' as http;
 import '../model/meal_model.dart';
 import '../model/meal_plan_model.dart';
@@ -97,7 +97,7 @@ class APIService {
     }
 
     Map<String, String> parameters = {
-      'ingredients': ingredients, 
+      'ingredients': ingredients,
       'number': '10',
       'limitLicense': 'true',
       'ranking': '1',
@@ -117,10 +117,14 @@ class APIService {
     };
 
     try {
-      var response = await http.get(uri, headers: headers);
-      Map<String, dynamic> data = json.decode(response.body);
-      SearchIngredients ingred = SearchIngredients.fromMap(data);
-      return ingred;
+      final response = await http.get(uri, headers: headers);
+      final data = json.decode(response.body);
+      //Map<String, dynamic> data = json.decode(response.body);
+      //var list = data.map((j) => SearchIngredients.fromMap(j)).toList();
+      SearchIngredients list = new SearchIngredients.fromMap(data[0]);
+
+      //var list = data.map((i) => SearchIngredients.fromMap(i)).toList();
+      return list;
     } catch (err) {
       throw err.toString();
     }

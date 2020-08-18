@@ -7,22 +7,26 @@ import '../model/meal_plan_model.dart';
 import '../model/meal_model.dart';
 import '../model/recipe_model.dart';
 import '../services/services.dart';
+import '../pages/ingredients_recipe_screen.dart';
 
-class MealPage extends StatefulWidget {
+class MealIngredientsPage extends StatefulWidget {
   final bool selectedMealPlan;
-  final MealPlan mealPlan;
+  //final MealPlan mealPlan;
   final SearchIngredients searchIngredients;
-  MealPage({this.selectedMealPlan, this.mealPlan, this.searchIngredients});
+  MealIngredientsPage({this.selectedMealPlan, this.searchIngredients});
 
-  State createState() => new MealPageState();
+  @override
+  State createState() {
+    return MealIngredientsPageState();
+  }
 }
 
-class MealPageState extends State<MealPage> {
-  buildMealCard(Meal meal, int index) {
+class MealIngredientsPageState extends State<MealIngredientsPage> {
+  buildMealCard(SearchIngredients searchIngred, int index) {
     String mealType = findMealType(index);
 
     return GestureDetector(
-      onTap: () => searchRecipe(meal, mealType),
+      onTap: () => searchRecipe(searchIngred, mealType),
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: <Widget>[
@@ -40,7 +44,7 @@ class MealPageState extends State<MealPage> {
             decoration: BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
-                image: NetworkImage(meal.imageURL),
+                image: NetworkImage(searchIngred.image),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(15.0),
@@ -85,14 +89,11 @@ class MealPageState extends State<MealPage> {
               children: <Widget>[
                 Align(
                     alignment: Alignment.bottomLeft,
-                    child: Text(
-                      meal.cookingTime.toString() + " minutes",
-                      style: TextStyle(fontSize: 15.0, color: Colors.white),
-                    )),
+                    ),
                 Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      meal.title,
+                      searchIngred.title,
                       style: TextStyle(fontSize: 21.0, color: Colors.white),
                       overflow: TextOverflow.ellipsis,
                     )),
@@ -104,14 +105,14 @@ class MealPageState extends State<MealPage> {
     );
   }
 
-  void searchRecipe(Meal meal, String mealType) async {
-    Recipe recipe = await APIService.instance.fetchRecipe(id: meal.id);
-    print(recipe.spoonacularSourceUrl);
+  void searchRecipe(SearchIngredients searchIngred, String mealType) async {
+    Recipe recipe = await APIService.instance.fetchRecipe(id: searchIngred.id);
+    //print(recipe.spoonacularSourceUrl);
     Navigator.push(
       this.context,
       MaterialPageRoute(
-        builder: (context) =>
-            RecipePage(mealType: mealType, recipe: recipe, meal: meal),
+        builder: (context) => RecipeIngredientsPage(
+            mealType: mealType, recipe: recipe, searchIngred: searchIngred),
       ),
     );
   }
@@ -155,11 +156,10 @@ class MealPageState extends State<MealPage> {
             ),*/
           ListView.builder(
             itemCount: (widget.selectedMealPlan == true)
-                ? widget.mealPlan.meals.length
+                ? 3
                 : 1,
             itemBuilder: (BuildContext context, int index) {
-              Meal meal = widget.mealPlan.meals[index];
-              return buildMealCard(meal, index);
+              return buildMealCard(widget.searchIngredients, index);
             },
           ),
         ]));
