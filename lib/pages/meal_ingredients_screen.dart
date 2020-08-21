@@ -12,7 +12,7 @@ import '../pages/ingredients_recipe_screen.dart';
 class MealIngredientsPage extends StatefulWidget {
   final bool selectedMealPlan;
   //final MealPlan mealPlan;
-  final SearchIngredients searchIngredients;
+  final List<SearchIngredients> searchIngredients;
   MealIngredientsPage({this.selectedMealPlan, this.searchIngredients});
 
   @override
@@ -159,7 +159,7 @@ class MealIngredientsPageState extends State<MealIngredientsPage> {
                 ? 3
                 : 1,
             itemBuilder: (BuildContext context, int index) {
-              return buildMealCard(widget.searchIngredients, index);
+              return buildMealCard(widget.searchIngredients[index], index);
             },
           ),
         ]));
