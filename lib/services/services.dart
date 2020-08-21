@@ -91,7 +91,7 @@ class APIService {
     }
   }
 
-  Future<SearchIngredients> searchByIngredients({String ingredients}) async {
+  Future<List<SearchIngredients>> searchByIngredients({String ingredients}) async {
     if (ingredients == 'None') {
       ingredients = ''; //Set to be an empty string!
     }
@@ -118,12 +118,14 @@ class APIService {
 
     try {
       final response = await http.get(uri, headers: headers);
-      final data = json.decode(response.body);
+      final data = json.decode(response.body) as List<dynamic>;
       //Map<String, dynamic> data = json.decode(response.body);
       //var list = data.map((j) => SearchIngredients.fromMap(j)).toList();
-      SearchIngredients list = new SearchIngredients.fromMap(data[0]);
+      //SearchIngredients list = new SearchIngredients.fromMap(data[0]);
 
-      //var list = data.map((i) => SearchIngredients.fromMap(i)).toList();
+      //https://stackoverflow.com/questions/52886683/getting-type-listdynamic-is-not-a-subtype-of-type-list-error-in-json
+      //bless this stack overflow post
+      var list = data.map((i) => SearchIngredients.fromMap(i)).toList();
       return list;
     } catch (err) {
       throw err.toString();
