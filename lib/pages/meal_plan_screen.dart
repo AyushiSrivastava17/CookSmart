@@ -18,6 +18,80 @@ class MealPage extends StatefulWidget {
 }
 
 class MealPageState extends State<MealPage> {
+  _buildTotalNutrientsCard() {
+    return Container(
+      height: 140.0,
+      margin: EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.0,
+        vertical: 10.0,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0, 2),
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Total Nutrients',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          /*Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Calories: ${widget.mealPlan.calories.toString()} cal',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                'Protein: ${widget.mealPlan.protein.toString()} g',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.0),
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Fat: ${widget.mealPlan.fat.toString()} g',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                'Carbs: ${widget.mealPlan.carbs.toString()} g',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),*/
+        ],
+      ),
+    );
+  }
+
   buildMealCard(Meal meal, int index) {
     String mealType = findMealType(index);
 
@@ -153,13 +227,18 @@ class MealPageState extends State<MealPage> {
                 )
               )
             ),*/
+
+          //_buildTotalNutrientsCard(),
           ListView.builder(
             itemCount: (widget.selectedMealPlan == true)
-                ? widget.mealPlan.meals.length
+                ? widget.mealPlan.meals.length + 1
                 : 1,
             itemBuilder: (BuildContext context, int index) {
-              Meal meal = widget.mealPlan.meals[index];
-              return buildMealCard(meal, index);
+              if (index == 0) {
+                return _buildTotalNutrientsCard();
+              }
+              Meal meal = widget.mealPlan.meals[index - 1];
+              return buildMealCard(meal, index - 1);
             },
           ),
         ]));
