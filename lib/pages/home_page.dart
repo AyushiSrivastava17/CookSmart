@@ -39,8 +39,9 @@ class HomePage extends StatelessWidget {
                       'Search for new recipes!',
                       style: new TextStyle(
                         color: Color(0xFFFF7477),
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Montserrat-Bold',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
                       ),
                     ),
                     icon: Icon(

@@ -49,6 +49,8 @@ flutter:
   assets:
      - image0.jpeg
      - homeBackground.png
+     - homeBackground1.png
+     - homeBackground2.png
      - background1.png
      - background2.png
      - background3.png
@@ -73,6 +75,7 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/Montserrat-Regular.ttf
+        - asset: assets/Montserrat-Bold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -105,7 +105,7 @@ class QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Hexcolor("#d4dcf2"),
+        //backgroundColor: Hexcolor("#d4dcf2"),
         appBar: AppBar(
           title: Text("Questionnaire",
               style: TextStyle(fontFamily: "MontSerrat", fontSize: 30)),
@@ -113,11 +113,11 @@ class QuizPageState extends State<QuizPage> {
         ),
         body: Stack(
           children: <Widget>[
-            /*Container(
+            Container(
               decoration: new BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("background1.png"), fit: BoxFit.fill)),
-            ),*/
+                      image: AssetImage("homeBackground2.png"), fit: BoxFit.fill)),
+            ),
             SingleChildScrollView(
               child: Center(
                 child: Column(children: <Widget>[
@@ -380,8 +380,8 @@ class QuizPageState extends State<QuizPage> {
             style: TextStyle(
                 color: Hexcolor("#a974f4"),
                 fontSize: 25,
-                fontWeight: FontWeight.w900,
-                fontFamily: "Montserrat"),
+                fontWeight: FontWeight.w700,
+                fontFamily: "Montserrat-Bold"),
             textAlign: TextAlign.center,
           ),
         ),

@@ -38,6 +38,16 @@ class CustomPage extends StatefulWidget {
 class CustomPageState extends State<CustomPage> {
   TextEditingController ingredientC = new TextEditingController();
   String ingredients;
+  List<String> entries = <String>[];
+  
+  void addItemToList() {
+    if (!entries.contains(ingredientC.text)){
+      setState(() {
+        entries.insert(0, ingredientC.text);
+      });
+    }
+    print("In addItemToList(): " + entries.last);
+  }
 
   void searchMealPlan() async {
     int calories = (1500 + (widget.sliderValue.single.toInt() * 1000));
@@ -46,8 +56,6 @@ class CustomPageState extends State<CustomPage> {
       allergies: makeAllergyString(),
       targetCalories: calories,
     );
-
-    //print(mealPlan.meals[0].title);
 
     Navigator.push(
         context,
@@ -59,12 +67,10 @@ class CustomPageState extends State<CustomPage> {
         ));
   }
 
-  void searchMealsByIngredients(String ingredients) async {
+  void searchMealsByIngredients(List<String> entries) async {
+    String ingredients = entriesListToString();
     List<SearchIngredients> searchIngred =
         await APIService.instance.searchByIngredients(ingredients: ingredients);
-
-    //print(searchIngred.title);
-    //print(searchIngred.sourceUrl);
 
     Navigator.push(
         context,
@@ -98,6 +104,20 @@ class CustomPageState extends State<CustomPage> {
     return allergyString;
   }
 
+  String entriesListToString() {
+    String listString = "";
+    if (entries.length == 1) {
+      listString += entries.last.toLowerCase();
+    } else {
+      for (int x = 0; x < entries.length - 1; x++) {
+        listString += entries.elementAt(x).toLowerCase();
+        listString += ", ";
+      }
+      listString += entries.last.toLowerCase();
+    }
+    return listString;
+  }
+
   Widget _buildQuestions(String question) {
     return Container(
       height: 50.0,
@@ -119,7 +139,6 @@ class CustomPageState extends State<CustomPage> {
       ),
     );
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +153,11 @@ class CustomPageState extends State<CustomPage> {
                   fontFamily: "Montserrat",
                   fontSize: 25))),
       body: Container(
-        color: Hexcolor('#FFE1A8'),
-          /*decoration: new BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("background3.png"), fit: BoxFit.cover)),*/
+        //color: Hexcolor('#FFE1A8'),
+        decoration: new BoxDecoration(
+          image: DecorationImage(
+          image: AssetImage("homeBackground1.png"), fit: BoxFit.cover)
+        ),
           child: Scaffold(
               backgroundColor: Colors.transparent,
               body: ListView(children: <Widget>[
@@ -146,69 +166,8 @@ class CustomPageState extends State<CustomPage> {
                       child: Column(
                   children: <Widget>[
                     Padding(padding: EdgeInsets.only(bottom: 20)),
-                    _buildQuestions("To include a list of ingredients in your recipes, add them inside the textbox below (separated by commas)"),
-                    _buildQuestions("Otherwise, click 'Randomized Meal Plan'!"),
-
-                    //Padding(padding: EdgeInsets.only(bottom: 20)),
-                    Container(
-                      width: 330,
-                      height: 80,
-                      child: TextField(
-                          controller: ingredientC,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Ingredients (e.g. apples, flour, sugar)',
-                          ),
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Hexcolor('#723D46'),
-                              fontWeight: FontWeight.bold),
-                          onSubmitted: (String value) {
-                            setState(() {
-                              ingredients = ingredients +
-                                  ", " +
-                                  value; //This isn't really necessary?
-                              //ingredients.add(value);
-                              ingredientC.clear();
-                              //value = "";
-                            });
-                          }),
-                    ),
-                    FloatingActionButton.extended(
-                      heroTag: "showIngredients",
-                      onPressed: () {
-                        //String ingred = _createIngredientString();
-                        //print(ingredientC.text);
-                        String ingred = ingredientC.text;
-                        return showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(
-                                    "The ingredients you have included are: \n" +
-                                        ingred,
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        color: Hexcolor('#723D46'),
-                                        //color: Color(0xFFFCA311),
-                                        fontWeight: FontWeight.bold)),
-                              );
-                            }
-                          );
-                      },
-                      label: Text(
-                        "See currently added ingredients!",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      backgroundColor: Color(0xFFFCA311),
-                    ),
-
-                    Padding(padding: EdgeInsets.only(bottom: 60)),
+                    _buildQuestions("To include a list of ingredients (preferably for single meals), add them inside the textbox below! Duplicates will not be shown"),
+                    _buildQuestions("Otherwise, tap 'Randomized Meal (Plan)'!"),
 
                     FloatingActionButton.extended(
                       heroTag: "RandomizedMealBut",
@@ -234,10 +193,47 @@ class CustomPageState extends State<CustomPage> {
                     FloatingActionButton.extended(
                       heroTag: "SearchByIngredBut",
                       onPressed: () {
-                        searchMealsByIngredients(ingredientC.text);
+                        if (entries.length == 0){
+                          return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: new Text("No Ingredients were entered!",
+                                  style: TextStyle(
+                                      color: Hexcolor("#723D46"),
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Montserrat"),
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: new Text(
+                                  "We can't do a search without being given ingredients. Would you want a completely randomized meal (plan) instead?",
+                                  style: TextStyle(
+                                      color: Hexcolor("#E26D5C"),
+                                      fontSize: 20,
+                                      fontFamily: "Montserrat"),
+                                  textAlign: TextAlign.center,
+                                ),
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(15)),
+                                actions: <Widget>[
+                                  // usually buttons at the bottom of the dialog
+                                  new FlatButton(
+                                    child: new Text("Ok", style: TextStyle(fontSize: 17)),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            }
+                          );
+                        } else {
+                          searchMealsByIngredients(entries);
+                        }
                       },
                       label: Text(
-                        "Search Meals by Ingredients",
+                        "Search for Meals by Ingredients",
                         style: new TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",
@@ -249,13 +245,63 @@ class CustomPageState extends State<CustomPage> {
                     ),
 
                     Padding(padding: EdgeInsets.all(20)),
-                    
-                  ],
-                )))
-              ]
+                    Container(
+                      width: 330,
+                      height: 80,
+                      child: TextField(
+                          controller: ingredientC,
+                          autocorrect: true, // autocorrect is available for ingredients
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Ingredients (e.g. apples, flour, sugar)',
+                          ),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Hexcolor('#723D46'),
+                            fontWeight: FontWeight.bold
+                          ),
+                          onSubmitted: (value) {
+                            addItemToList();
+                            ingredientC.clear();
+                            ingredients = ingredients +
+                            ", " +
+                            value; 
+                            value = "";
+                          },
+                        ),
+                      ),
+                      entries.length > 0 ?
+                        ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true, 
+                        itemCount: entries.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 50,
+                            color: Color(0xFFFCA311),
+                            child: Center(child: Text('${entries[index]}', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat-Bold', fontSize: 18))),
+                            padding: const EdgeInsets.all(15),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                        ) 
+                        : Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(15),
+                            height: 50,
+                            color: Color(0xFFFCA311),
+                            child: Center(child: Text('Ingredients entered will be shown here ...', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat-Bold', fontSize: 18))),
+                          )
+                        ),
+                      ],
+                  )
+                )
               )
-            )
-        ),
+            ]
+          )
+        )
+      ),
     );
   }
 }

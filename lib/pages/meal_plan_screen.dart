@@ -21,13 +21,14 @@ class MealPageState extends State<MealPage> {
   _buildTotalNutrientsCard() {
     return Container(
       height: 140.0,
+      width: 70.0,
       margin: EdgeInsets.all(20.0),
       padding: EdgeInsets.symmetric(
-        horizontal: 15.0,
+        horizontal: 10.0,
         vertical: 10.0,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFFFF7450),
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
@@ -38,55 +39,51 @@ class MealPageState extends State<MealPage> {
         ],
       ),
       child: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             'Total Nutrients',
             style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.w600,
+              fontSize: 22.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+              fontFamily: "MontSerrat"
             ),
           ),
-          SizedBox(height: 10.0),
-          /*Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Calories: ${widget.mealPlan.calories.toString()} cal',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Protein: ${widget.mealPlan.protein.toString()} g',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          SizedBox(height: 5.0),
+          Text("Calories: ${widget.mealPlan.calories.toString()} cal",
+            style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+            fontFamily: "MontSerrat"
+            ),
           ),
-          SizedBox(height: 10.0),
-          Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Fat: ${widget.mealPlan.fat.toString()} g',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
+          Text("Protein: ${widget.mealPlan.protein.toString()} g",
+            style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+            fontFamily: "MontSerrat"
+            ),
+          ),
+          Text(
+            'Fat: ${widget.mealPlan.fat.toString()} g',
+              style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              fontFamily: "MontSerrat"
+            ),
+          ),
+          Text(
+            'Carbs: ${widget.mealPlan.carbs.toString()} g',
+              style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              fontFamily: "MontSerrat"
               ),
-              Text(
-                'Carbs: ${widget.mealPlan.carbs.toString()} g',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),*/
+          ),
         ],
       ),
     );
@@ -217,18 +214,6 @@ class MealPageState extends State<MealPage> {
                 image: DecorationImage(
                     image: AssetImage("image0.jpeg"), fit: BoxFit.fill)),
           ),
-          /*Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                "Total calories for this meal plan: " + widget.mealPlan.calories.toString(),
-                style: TextStyle(
-                  fontFamily: 'MontSerrat'
-                )
-              )
-            ),*/
-
-          //_buildTotalNutrientsCard(),
           ListView.builder(
             itemCount: (widget.selectedMealPlan == true)
                 ? widget.mealPlan.meals.length + 1
