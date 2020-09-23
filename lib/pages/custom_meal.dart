@@ -46,7 +46,7 @@ class CustomPageState extends State<CustomPage> {
         entries.insert(0, ingredientC.text);
       });
     }
-    print("In addItemToList(): " + entries.last);
+    //print("In addItemToList(): " + entries.last);
   }
 
   void searchMealPlan() async {
@@ -167,6 +167,25 @@ class CustomPageState extends State<CustomPage> {
                   children: <Widget>[
                     Padding(padding: EdgeInsets.only(bottom: 20)),
                     _buildQuestions("To include a list of ingredients (preferably for single meals), add them inside the textbox below! Duplicates will not be shown"),
+                    Container(
+                      height: 50.0,
+                      width: 370.0,
+                      //color: Colors.transparent,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: new Center(
+                          child: new Text(
+                            "Tap an added Ingredient to delete it from custom ingredients to look for!",
+                            style: TextStyle(
+                                color: Hexcolor('#723D46'),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "Montserrat-Bold"),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
                     _buildQuestions("Otherwise, tap 'Randomized Meal (Plan)'!"),
 
                     FloatingActionButton.extended(
@@ -263,9 +282,6 @@ class CustomPageState extends State<CustomPage> {
                           onSubmitted: (value) {
                             addItemToList();
                             ingredientC.clear();
-                            ingredients = ingredients +
-                            ", " +
-                            value; 
                             value = "";
                           },
                         ),
@@ -277,11 +293,22 @@ class CustomPageState extends State<CustomPage> {
                         shrinkWrap: true, 
                         itemCount: entries.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 50,
-                            color: Color(0xFFFCA311),
-                            child: Center(child: Text('${entries[index]}', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat-Bold', fontSize: 18))),
-                            padding: const EdgeInsets.all(15),
+                          return FloatingActionButton.extended(
+                            heroTag: "AddedIngredient" + index.toString(),
+                            onPressed: () {
+                              setState(() {
+                                entries.removeAt(index);
+                              });
+                            },
+                            label: Text(
+                              '${entries[index]}', 
+                              style: TextStyle(
+                                color: Colors.white, 
+                                fontFamily: 'Montserrat-Bold', 
+                                fontSize: 18
+                              )
+                            ),
+                            backgroundColor: Color(0xFFFCA311),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) => const Divider(),
