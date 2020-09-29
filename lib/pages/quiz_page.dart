@@ -380,8 +380,8 @@ class QuizPageState extends State<QuizPage> {
             style: TextStyle(
                 color: Hexcolor("#a974f4"),
                 fontSize: 25,
-                fontWeight: FontWeight.w700,
-                fontFamily: "Montserrat-Bold"),
+                fontWeight: FontWeight.w800,
+                fontFamily: "Montserrat"),
             textAlign: TextAlign.center,
           ),
         ),

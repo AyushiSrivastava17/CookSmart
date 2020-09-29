@@ -1,10 +1,9 @@
 import 'package:CookSmart/model/ingredients_list.dart';
-import 'package:CookSmart/pages/recipe_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hexcolor/hexcolor.dart';
 import '../model/meal_plan_model.dart';
 import '../model/meal_model.dart';
+import 'package:CookSmart/pages/recipe_screen.dart';
 import '../model/recipe_model.dart';
 import '../services/services.dart';
 import '../pages/ingredients_recipe_screen.dart';

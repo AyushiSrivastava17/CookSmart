@@ -47,7 +47,7 @@ class CustomPageState extends State<CustomPage> {
       });
     }
     //print("In addItemToList(): " + entries.last);
-  }
+  } 
 
   void searchMealPlan() async {
     int calories = (1500 + (widget.sliderValue.single.toInt() * 1000));
@@ -118,6 +118,27 @@ class CustomPageState extends State<CustomPage> {
     return listString;
   }
 
+  Widget _buildStatement(String statement) {
+    return Container(
+      height: 50.0,
+      width: 370.0,
+      child: Container(
+        alignment: Alignment.center,
+          child: new Center(
+            child: new Text(
+              statement,
+              style: TextStyle(
+              color: Hexcolor('#723D46'),
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              fontFamily: "Montserrat-Bold"),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+     );
+  }
+
   Widget _buildQuestions(String question) {
     return Container(
       height: 50.0,
@@ -142,7 +163,6 @@ class CustomPageState extends State<CustomPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return new Scaffold(
       appBar: AppBar(
           //backgroundColor: Color(0xFFFCA311),
@@ -166,26 +186,8 @@ class CustomPageState extends State<CustomPage> {
                       child: Column(
                   children: <Widget>[
                     Padding(padding: EdgeInsets.only(bottom: 20)),
-                    _buildQuestions("To include a list of ingredients (preferably for single meals), add them inside the textbox below! Duplicates will not be shown"),
-                    Container(
-                      height: 50.0,
-                      width: 370.0,
-                      //color: Colors.transparent,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: new Center(
-                          child: new Text(
-                            "Tap an added Ingredient to delete it from custom ingredients to look for!",
-                            style: TextStyle(
-                                color: Hexcolor('#723D46'),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: "Montserrat-Bold"),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
+                    _buildQuestions("To include a list of ingredients, add them inside the textbox below! (Duplicates will not be shown)"),
+                    _buildStatement("To delete added ingredient from custom ingredients: Tap the ingredient!"),
                     _buildQuestions("Otherwise, tap 'Randomized Meal (Plan)'!"),
 
                     FloatingActionButton.extended(
@@ -252,7 +254,7 @@ class CustomPageState extends State<CustomPage> {
                         }
                       },
                       label: Text(
-                        "Search for Meals by Ingredients",
+                        "Meals Incorporating Custom Ingredients",
                         style: new TextStyle(
                           color: Colors.white,
                           fontFamily: "Montserrat",

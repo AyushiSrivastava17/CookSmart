@@ -27,7 +27,7 @@ class SearchIngredients {
         id: json["id"],
         image: json["image"],
         title: json["title"],
-        sourceUrl: 'https://spoonacular.com/recipes/' + json['title'].split(" ").join("-").toLowerCase().toString() + '-' + json['id'].toString()
+        sourceUrl: 'https://spoonacular.com/recipes/' + json['title'].split(" ").join("-").toLowerCase().toString() + '-' + json['id'].toString() + ''
       );
 
   Map<String, dynamic> toMap() => {
