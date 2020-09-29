@@ -2,10 +2,10 @@
 
 A Flutter Project with the goal of helping users create meal plans with their intended amount of calories, sugar, and health conditions like diabetes taken into account.
 
-## What the app aims to do
-This app will give customers the chance to get detailed meal plans or single plans while incorporating more personal data. The app also allows health conscious as well as customers with health conditions like diabetes to have healthier alternatives to ingredients needed for the given data. 
+## Overview
+This app will give customers the chance to get detailed meal plans or single plans while incorporating more personal data. The app also allows health conscious as well as customers with health conditions like diabetes to have healthier alternatives to ingredients needed for the given data. The aim overall is to be able to provide recipes involving ingredients in the house and creating healthy versions of those recipes if needed. An app that can help a range of customers - from college students to middle aged people. 
 
-### A Customer's Journey through the app
+### Demonstration of Customer's Journey through the app
 The customer will be shown a questionnaire to answer questions about diet choices, caloric intake, allergies to be aware of, experiencing any health conditions that could be affected heavily by diet, and if they want a single meal or a meal plan for a day. 
 
 This information is then given a chance to be further personalized by allowing the customer to add in custom ingredients - allows for meals to be shown from ingredients at home - to be incorporated in the recipe(s).
