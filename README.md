@@ -16,6 +16,9 @@ A detailed page of the nutrition, ingredients and cooking instructions for each 
 
 If health conditions are present in the given data, alternatives for certain ingredients and cooking tips will be added to help create a healthier version of the given meals with the same taste!
 
+## Tech used
+Built with Flutter and Dart in Visual Studio
+
 ## Future advancements being made
 - [ ] A personalized page to properly show the recipes for given meals
 - [ ] Adding the database of healthier ingredients as alternatives for regular meals 
